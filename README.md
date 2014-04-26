@@ -22,6 +22,8 @@ The script provided defines the function "readSet" intended to read either the t
 
 ## Data
 
+The following dataset is not included in this repo. To get it, please click [here](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
+
 For each record it is provided:
 
 - Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
