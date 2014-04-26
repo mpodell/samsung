@@ -1,20 +1,34 @@
-setwd("C:/Users/orojuan/Documents/Data Science/Getting data/UCI HAR Dataset")
+### It is assumed that "UCI HAR Dataset" folder with Samsung dataset is in the working directory ###
+#setwd("C:/Users/orojuan/Documents/Data Science/Getting data/UCI HAR Dataset")
+
+# Read feature names
 header <- read.table("./features.txt",header=F,comment.char="",as.is=T)[,2]
+# Read activity labels
 act <- read.table("./activity_labels.txt",header=F,comment.char="",as.is=T)[,2]
 
+# Funtion defined to read either the train or test datasets
 readSet <- function(type = "train"){
+  # Read features' measurements
   x <- read.table(paste("./",type,"/X_",type,".txt",sep=""),header=F,comment.char="")
+  # Read IDs of subjects involved in measurements
   ind <- as.factor(readLines(paste("./",type,"/subject_",type,".txt",sep="")))
+  # Read activity labels assigned to each record
   y <- readLines(paste("./",type,"/Y_",type,".txt",sep=""))
+  # Bind response, subject and features
   res <- cbind(y,ind,x)
+  # Assign headers to dataframe
   dimnames(res)[[2]] <- c("Act","Subject",header)
   return(res)
 }
 
+# Read and merge train and test datasets (Activity #1 in peer assessment project)
 dataset <- rbind(readSet("train"),readSet("test"))
+# Re-label records with descriptive activity names (Activities #3 & #4 in peer assessment project)
 dataset$Act <- as.factor(act[dataset$Act])
-
+# Extract measurements on the mean and std dev for each measurement (Activity #2 in peer assessment project)
 subset <- dataset[,grep("mean|std",header)+2]
-
-res <- by(dataset[, 3:ncol(dataset)], interaction(dataset$Act, dataset$Subject, drop = T), colMeans)  #Split only on ocurring tuples
+# Calculate average of measurements for each activity and each subject (Activity #5 in peer assessment project)
+res <- by(dataset[, 3:ncol(dataset)], interaction(dataset$Act, dataset$Subject, drop = T), colMeans)
 res <- do.call(rbind, res)
+# Write merged dataset in comma-separated-value format
+write.table(dataset,"../output.csv",sep=",",row.names=F)
