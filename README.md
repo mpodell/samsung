@@ -10,9 +10,14 @@ The script provided defines the function "readSet" intended to read either the t
 4. Re-label records with descriptive activity names.
 5. Extract measurements on the mean and std dev for each measurement.
 6. Calculate average of measurements for each activity and each subject.
-7. Write "output.csv" file at the same level as "UCI HAR Dataset" folder.
+7. Clean output obtained in previous step.
+8. Write "output.txt" file in parent directory (same level as "UCI HAR Dataset" folder).
 
-**NOTE:** It is assumed that "UCI HAR Dataset" folder with Samsung dataset is in the working directory
+**NOTES:**
+
+- It is assumed that "UCI HAR Dataset" folder with Samsung dataset is in the working directory.
+- Regarding step 5, all features containing either "mean" or "std" strings in their names were extracted (79 features).
+- Regarding step 7, a single column is provided for the Activity.Subject information (e.g. "LAYING.1"). 
 
 
 ## Data
